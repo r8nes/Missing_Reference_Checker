@@ -4,6 +4,8 @@ A small script that checks a specific hierarchy for missing links. For dumbs lik
 
 - Add script to Editor folder.
 
+- Select your root Game Object.
+
 - Use Tools Menu to check your hierarchy.  
 
 ![image](https://github.com/r8nes/Missing_Reference_Checker/assets/59758691/5c7c0220-7ac0-41e5-8bd0-8ebfa346d982)
