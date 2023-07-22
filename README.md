@@ -4,7 +4,7 @@ A small script that checks a specific hierarchy for missing links. For dumbs lik
 
 - Add script to Editor folder.
 
--Select current Game Object. It will be our root.
+- Select current Game Object. It will be our root.
 
 - Use Tools Menu to check your hierarchy.  
 
