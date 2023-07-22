@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class MissingReferenceCheckerEditor : Editor
 {
-    // Menu item to check for missing references
     [MenuItem("Tools/Check Missing References")]
     private static void CheckMissingReferences()
     {
@@ -15,34 +14,42 @@ public class MissingReferenceCheckerEditor : Editor
             Debug.Log("Please select a GameObject in the Hierarchy to check for missing references.");
             return;
         }
-        
-        Component[] components = selectedGameObject.GetComponents<Component>();
+
+        CheckMissingReferencesRecursive(selectedGameObject);
+
+        Debug.Log("Missing reference check completed.");
+    }
+
+    private static void CheckMissingReferencesRecursive(GameObject rootObject)
+    {
+        Component[] components = rootObject.GetComponents<Component>();
         
         foreach (Component component in components)
         {
-            //Add specific component to ignore it.
             switch (component)
             {
-                case MeshRenderer:
-                case TextMeshPro:
-                case TextMeshProUGUI:
-                case Button:
-                case Image:
+                case MonoBehaviour:
+                    break;
+                default:
                     continue;
             }
 
             SerializedObject serializedObject = new SerializedObject(component);
             SerializedProperty prop = serializedObject.GetIterator();
-
             while (prop.NextVisible(true))
             {
                 if (prop.propertyType == SerializedPropertyType.ObjectReference && prop.objectReferenceValue == null)
                 {
-                    Debug.LogError("Missing reference in " + component.GetType().ToString() + " on GameObject " + selectedGameObject.name + ": Property " + prop.name, selectedGameObject);
+                    Debug.LogError("Missing reference in " + component.GetType().ToString() + " on GameObject " + rootObject.name + ": Property " + prop.name, rootObject);
                 }
             }
         }
 
-        Debug.Log("Missing reference check completed.");
+        int childCount = rootObject.transform.childCount;
+        for (int i = 0; i < childCount; i++)
+        {
+            Transform child = rootObject.transform.GetChild(i);
+            CheckMissingReferencesRecursive(child.gameObject);
+        }
     }
 }
