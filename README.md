@@ -1,6 +1,6 @@
 ## Missing Reference Checker v.1.0
 
-#A small script that checks a specific hierarchy for missing links. For dumbs like me.
+A small script that checks a specific hierarchy for missing links. For dumbs like me.
 
 - Add script to Editor folder.
 
